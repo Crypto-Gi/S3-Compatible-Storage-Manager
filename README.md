@@ -5,11 +5,13 @@ Python scripts to manage Cloudflare R2 buckets using the S3-compatible API with 
 ## Features
 
 ### 📤 Upload Script (`upload_to_r2.py`)
+- **Incremental uploads**: Only uploads new files, skips existing ones
 - Recursively uploads entire directory structure to R2
 - Maintains folder hierarchy in the bucket
 - Automatically detects and sets correct content types
+- Pre-scan analysis shows what will be uploaded vs skipped
 - Shows progress with file sizes
-- Provides upload summary with statistics
+- Provides detailed summary with statistics
 
 ### 🗑️ Delete Script (`delete_r2_bucket.py`)
 - Batch deletes all objects from R2 bucket
@@ -87,10 +89,12 @@ Or use the helper script:
 ### Upload Process
 
 1. Reads configuration from `.env` file
-2. Walks through all files in `R2_SOURCE_DIR`
-3. Maintains the exact folder hierarchy
-4. Uploads each file with correct content-type
-5. Reports progress and final statistics
+2. **Scans R2 bucket** to get list of existing files (in-memory set)
+3. **Scans local directory** to build list of files to process
+4. **Compares** local vs remote and identifies new files
+5. Shows analysis: how many files to upload vs skip
+6. Uploads only new files with correct content-type
+7. Reports detailed statistics (uploaded, skipped, sizes)
 
 ### Delete Process
 
@@ -111,17 +115,36 @@ Upload Configuration:
 ============================================================
 
 Start upload? (yes/no): yes
-Starting upload from: /Users/username/Downloads/source
-To bucket: my-bucket/source
 
-Uploading: folder1/file1.txt -> source/folder1/file1.txt
+============================================================
+Incremental Upload - Skipping existing files
+============================================================
+
+Scanning R2 bucket: my-bucket...
+Found 100 existing objects in bucket
+
+Scanning local directory: /Users/username/Downloads/source...
+Found 200 local files
+
+============================================================
+Analysis:
+  Total local files: 200
+  New files to upload: 100 (22.5 MB)
+  Existing files (will skip): 100 (22.73 MB)
+============================================================
+
+Starting upload to: my-bucket/source
+============================================================
+
+Uploading: folder1/newfile.txt -> source/folder1/newfile.txt
   Size: 1.25 KB, Type: text/plain
   ✓ Uploaded successfully
 
 ============================================================
 Upload complete!
-Successfully uploaded: 150 files
-Total size: 45.23 MB
+Successfully uploaded: 100 files (22.5 MB)
+Skipped (already exist): 100 files (22.73 MB)
+Total files processed: 200
 ============================================================
 ```
 
