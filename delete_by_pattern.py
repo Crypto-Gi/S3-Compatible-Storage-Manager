@@ -158,20 +158,35 @@ def delete_by_pattern(bucket_name, extensions, patterns, prefix='', dry_run=Fals
     
     if len(matching_objects) > 20:
         print(f"\n  ... and {len(matching_objects) - 20} more files")
+        print(f"\nWould you like to see the complete list? (yes/no): ", end='')
+        show_all = input().lower()
+        
+        if show_all == 'yes':
+            print(f"\n{'='*60}")
+            print("Complete list of files to delete:")
+            print(f"{'='*60}\n")
+            for obj_key, reason in matching_objects:
+                print(f"  {obj_key} ({reason})")
+            print(f"\n{'='*60}")
     
     print(f"\n{'='*60}")
     
     if dry_run:
         print("DRY RUN MODE - No files will be deleted")
+        print("Set DELETE_DRY_RUN=false in .env to actually delete files")
         return
     
     # Confirmation
-    print(f"⚠️  WARNING: This will permanently delete {len(matching_objects)} files!")
-    confirmation = input("Type 'DELETE' to confirm: ")
+    print(f"⚠️  WARNING: This will PERMANENTLY delete {len(matching_objects)} files!")
+    print(f"⚠️  This action CANNOT be undone!")
+    print(f"\nType 'DELETE' (all caps) to confirm deletion: ", end='')
+    confirmation = input()
     
     if confirmation != 'DELETE':
-        print("Operation cancelled.")
+        print("\n❌ Operation cancelled. No files were deleted.")
         return
+    
+    print("\n✓ Confirmation received. Starting deletion...")
     
     # Delete objects
     print(f"\n{'='*60}")
@@ -216,10 +231,13 @@ def delete_by_pattern(bucket_name, extensions, patterns, prefix='', dry_run=Fals
     
     # Summary
     print(f"\n{'='*60}")
-    print(f"Deletion complete!")
+    print(f"✓ Deletion complete!")
+    print(f"{'='*60}")
     print(f"Successfully deleted: {deleted_count} files")
     if error_count > 0:
-        print(f"Errors encountered: {error_count} files")
+        print(f"❌ Errors encountered: {error_count} files")
+    else:
+        print(f"✓ No errors encountered")
     print(f"{'='*60}")
 
 def main():
