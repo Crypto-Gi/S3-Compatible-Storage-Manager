@@ -1,7 +1,9 @@
-# Environment variables
+# Environment variables - NEVER commit credentials!
 .env
 .env.local
 .env.*.local
+.env.backup
+*.env
 
 # Python
 __pycache__/
@@ -21,32 +23,201 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
 # Virtual environments
 venv/
 ENV/
 env/
 .venv
+env.bak/
+venv.bak/
+pythonenv*/
 
-# IDE
+# IDE and Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
+.atom/
+.brackets.json
+*.code-workspace
+
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
 
 # Logs
 *.log
+logs/
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
 
 # Testing
 .pytest_cache/
 .coverage
+.coverage.*
 htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.pytest_cache/
+junit/
+test-results/
 
 # Temporary files
 *.tmp
 *.bak
+*.swp
+*.swo
+*~.nib
+*.orig
+*.rej
+.*.sw?
+
+# Backup files
+*.backup
+*.old
+*.save
+*-backup
+*-old
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.gz
+*.bz2
+*.xz
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath
+*.sage.py
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Rope
+.ropeproject
+
+# mkdocs
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/
+
+# pytype
+.pytype/
+
+# Cython
+cython_debug/
+
+# Local configuration
+config.local.json
+settings.local.json
+secrets.json
+credentials.json
+
+# Build artifacts
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Documentation builds
+docs/_build/
+docs/_static/
+docs/_templates/
+
+# Project specific
+# Add your project-specific ignores here
