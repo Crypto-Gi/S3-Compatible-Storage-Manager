@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [v0.3] - 2024-11-25
+
+### Added
+- **Move directory script**: New `move_r2_directory.py` for relocating directories within bucket
+- Copy-then-delete operation for safe directory moves
+- Preview mode showing what will be moved before execution
+- Progress tracking for move operations
+- Helper script `run_move.sh` for easy execution
+
+### Features
+- Move entire directories while preserving structure
+- Handles any number of objects efficiently
+- Detailed error reporting and recovery
+- Customizable move operations via configuration
+
+### Use Cases
+- Reorganize bucket structure
+- Consolidate directories under common parent
+- Rename directory paths
+
+## [v0.2] - 2024-11-08
+
 ### Added
 - **Incremental upload feature**: Upload script now checks existing files in R2 before uploading
 - Pre-upload analysis showing files to upload vs skip

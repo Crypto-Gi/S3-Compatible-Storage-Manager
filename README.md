@@ -23,6 +23,15 @@ Python scripts to manage S3-compatible object storage buckets using boto3. Works
 - **Detailed logging**: Shows progress and reports any errors
 - **Error handling**: Gracefully handles API errors and reports failures
 
+### 📦 Move Script (`move_r2_directory.py`)
+- **Directory relocation**: Move entire directories within the same bucket
+- **Preserves structure**: Maintains all subdirectories and files
+- **Copy-then-delete**: Safely copies objects before deleting originals
+- **Preview mode**: Shows what will be moved before execution
+- **Batch operations**: Handles any number of objects efficiently
+- **Progress tracking**: Shows each object being moved
+- **Error handling**: Reports failures and continues with remaining objects
+
 ## Prerequisites
 
 ```bash
@@ -179,6 +188,41 @@ Or use the helper script:
 - Shows progress for each deleted object
 - Reports any errors encountered
 
+### Move Directories Within Bucket
+
+Move directories to a new location within the same bucket:
+
+```bash
+python3 move_r2_directory.py
+```
+
+Or use the helper script:
+
+```bash
+./run_move.sh
+```
+
+**How it works:**
+- Copies all objects from source directory to destination
+- Deletes original objects after successful copy
+- Preserves complete directory structure and all files
+- Shows preview before moving
+
+**Example:**
+- Move `source/ecos-release-notes/` → `source/HPE Aruba/ecos-release-notes/`
+- Move `source/orch-release-notes/` → `source/HPE Aruba/orch-release-notes/`
+
+**Customization:**
+Edit the `moves` list in `main()` function to define your own move operations:
+```python
+moves = [
+    {
+        'source': 'old/path/',
+        'destination': 'new/path/'
+    }
+]
+```
+
 ## How It Works
 
 ### Upload Process
@@ -197,6 +241,16 @@ Or use the helper script:
 2. Deletes objects in batches of up to 1000
 3. Handles pagination automatically
 4. Reports deleted objects and any errors
+
+### Move Process
+
+1. Lists all objects with the source prefix
+2. Shows preview of what will be moved
+3. Asks for confirmation
+4. For each object:
+   - Copies to new location (preserving path structure)
+   - Deletes original after successful copy
+5. Reports detailed statistics (moved count, errors)
 
 ## Examples
 
@@ -325,6 +379,8 @@ The in-memory comparison approach is efficient and works well even with millions
 - **Data migration**: Transfer files between different S3-compatible services
 - **Bulk operations**: Efficiently manage large numbers of files
 - **Multi-cloud**: Use the same scripts across different cloud providers
+- **Directory reorganization**: Restructure your bucket by moving directories
+- **Folder consolidation**: Move multiple directories under a common parent
 
 ## License
 
@@ -336,5 +392,6 @@ Contributions are welcome! Feel free to open issues or submit pull requests.
 
 ## Version History
 
+- **v0.3** - Move directory script (relocate directories within bucket)
 - **v0.2** - Incremental upload feature (skip existing files)
 - **v0.1** - Initial release
